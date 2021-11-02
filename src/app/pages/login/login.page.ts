@@ -10,7 +10,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  credentialForm: FormGroup
+  credentialForm: FormGroup;
+  token: string;
   constructor(
     private fb: FormBuilder,
     private alertController: AlertController,
@@ -23,15 +24,15 @@ export class LoginPage implements OnInit {
     this.credentialForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
-    })
+    });
   }
   async signUp() {
-    const loading = await this.loadingController.create()
+    const loading = await this.loadingController.create();
     await  loading.present();
 
     this.chatService.signUp(this.credentialForm.value).then( user => {
       loading.dismiss();
-      this.router.navigateByUrl('/chat', { replaceUrl: true })
+      this.router.navigateByUrl('/chat', { replaceUrl: true });
       }, async err => {
       loading.dismiss();
       const alert = await  this.alertController.create({
@@ -41,17 +42,17 @@ export class LoginPage implements OnInit {
       });
 
       await  alert.present();
-    })
+    });
   }
   async signIn() {
-    const loading = await this.loadingController.create()
+    const loading = await this.loadingController.create();
     await  loading.present();
 
     this.chatService.signIn(this.credentialForm.value)
       .then( res => {
-      loading.dismiss();
-      this.router.navigateByUrl('/chat', { replaceUrl: true })
-    }, async err => {
+        res.user.getIdToken().then(result => localStorage.setItem('token', result));      loading.dismiss();
+      this.router.navigateByUrl('/chat', { replaceUrl: true });
+        }, async err => {
       loading.dismiss();
       const alert = await  this.alertController.create({
         header: ':(',
@@ -60,14 +61,14 @@ export class LoginPage implements OnInit {
       });
 
       await  alert.present();
-    })
+    });
   }
 
   get email() {
-    return this.credentialForm.get('email')
+    return this.credentialForm.get('email');
   }
   get password() {
-    return this.credentialForm.get('password')
+    return this.credentialForm.get('password');
   }
 
 }
