@@ -1,9 +1,30 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Send2You</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
 
+    <form [formGroup]="credentialForm">
+    <ion-item>
+      <ion-input
+      placeholder="Email address"
+      formControlName="email"
+      autofocus="true"
+      clear-input="true"
+      >
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        placeholder="password"
+        formControlName="password"
+        clear-input="true"
+      >
+      </ion-input>
+    </ion-item>
+    </form>
+    <ion-button (click)="signUp()" expand="full">Sign Up</ion-button>
+    <ion-button (click)="signIn()" color="secondary" expand="full">Sign In</ion-button>
 </ion-content>

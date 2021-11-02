@@ -41,7 +41,7 @@ export class ChatService {
    ).set({
      uid,
      email: credential.user.email
-   })
+   });
 
  }
 
