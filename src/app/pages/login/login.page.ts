@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
     const loading = await this.loadingController.create();
     await  loading.present();
 
-    this.chatService.signUp(this.credentialForm.value).then( user => {
+    await this.chatService.signUp(this.credentialForm.value).then( user => {
       loading.dismiss();
       this.router.navigateByUrl('/chat', { replaceUrl: true });
       }, async err => {
@@ -50,8 +50,9 @@ export class LoginPage implements OnInit {
 
     this.chatService.signIn(this.credentialForm.value)
       .then( res => {
-        res.user.getIdToken().then(result => localStorage.setItem('token', result));      loading.dismiss();
-      this.router.navigateByUrl('/chat', { replaceUrl: true });
+        res.user.getIdToken().then(result => localStorage.setItem('token', result));
+        loading.dismiss();
+        this.router.navigateByUrl('/chat', { replaceUrl: true });
         }, async err => {
       loading.dismiss();
       const alert = await  this.alertController.create({

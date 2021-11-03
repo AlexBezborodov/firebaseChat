@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ChatService } from 'src/app/services/chat.service';
+import { ChatService, Message } from 'src/app/services/chat.service';
+import { IonContent } from '@ionic/angular';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
@@ -8,6 +10,10 @@ import { ChatService } from 'src/app/services/chat.service';
   styleUrls: ['./chat.page.scss'],
 })
 export class ChatPage implements OnInit {
+  @ViewChild(IonContent) content: IonContent;
+
+  messages: Observable<Message[]>
+  newMsg = 'test';
 
   constructor(
     private chatService: ChatService,
@@ -19,10 +25,20 @@ export class ChatPage implements OnInit {
     if (!auth) {
       this.router.navigate(['/']);
     }
+    this.messages = this.chatService.getChatMessages();
   }
   signOut() {
-    this.chatService.signOut();
-    localStorage.removeItem('token');
-    this.router.navigate(['/']);
+    this.chatService.signOut()
+      .then(() => {
+        localStorage.removeItem('token');
+        this.router.navigateByUrl('/', {replaceUrl: true});
+      });
+  }
+  sendMessage() {
+    this.chatService.addChatMessage(this.newMsg)
+      .then( () => {
+        this.newMsg = '';
+        this.content.scrollToBottom();
+      });
   }
 }

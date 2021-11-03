@@ -1,30 +1,43 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Send2You</ion-title>
-  </ion-toolbar>
-</ion-header>
+<!--<ion-header>-->
+<!--  <ion-toolbar color="primary">-->
+<!--    <ion-title>Send2You</ion-title>-->
+<!--  </ion-toolbar>-->
+<!--</ion-header>-->
 
-<ion-content class="ion-padding">
-
+<div class="flex">
+  <div class="container">
+    <img class="logo" src="../../../assets/logo.png" alt="logo">
+    <h2>Enter to chat</h2>
     <form [formGroup]="credentialForm">
-    <ion-item>
-      <ion-input
-      placeholder="Email address"
-      formControlName="email"
-      autofocus="true"
-      clear-input="true"
-      >
-      </ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input
-        placeholder="password"
-        formControlName="password"
-        clear-input="true"
-      >
-      </ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-input
+          placeholder="Email address"
+          formControlName="email"
+          autofocus="true"
+          clear-input="true"
+        >
+        </ion-input>
+
+      </ion-item>
+      <div *ngIf="(email.dirty || email.touched) && email.dirty" class="errors">
+        <span *ngIf="email.errors?.required"> Email is required</span>
+        <span *ngIf="email.errors?.email"> Email is invalid</span>
+      </div>
+      <ion-item>
+        <ion-input
+          placeholder="password"
+          formControlName="password"
+          clear-input="true"
+        >
+        </ion-input>
+      </ion-item>
+      <div *ngIf="(password.touched || password.dirty) && password.dirty" class="errors">
+        <span *ngIf="password.errors?.required"> Password is required</span>
+        <span *ngIf="password.errors?.minlength"> Password needs to be min 6 characters</span>
+      </div>
     </form>
-    <ion-button (click)="signUp()" expand="full">Sign Up</ion-button>
-    <ion-button (click)="signIn()" color="secondary" expand="full">Sign In</ion-button>
-</ion-content>
+    <ion-button (click)="signUp()" >Sign Up</ion-button>
+    <ion-button (click)="signIn()" color="secondary" >Sign In</ion-button>
+  </div>
+
+</div>
