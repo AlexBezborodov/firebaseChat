@@ -11,9 +11,18 @@
     <form [formGroup]="credentialForm">
       <ion-item>
         <ion-input
+          placeholder="NickName"
+          formControlName="nickName"
+          autofocus="true"
+          clear-input="true"
+        >
+        </ion-input>
+
+      </ion-item>
+      <ion-item>
+        <ion-input
           placeholder="Email address"
           formControlName="email"
-          autofocus="true"
           clear-input="true"
         >
         </ion-input>

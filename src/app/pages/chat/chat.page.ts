@@ -13,7 +13,7 @@ export class ChatPage implements OnInit {
   @ViewChild(IonContent) content: IonContent;
 
   messages: Observable<Message[]>
-  newMsg = 'test';
+  newMsg = '';
 
   constructor(
     private chatService: ChatService,
@@ -40,5 +40,13 @@ export class ChatPage implements OnInit {
         this.newMsg = '';
         this.content.scrollToBottom();
       });
+  }
+
+  deleteMsg(id: string) {
+    this.chatService.deleteMessage(id);
+  }
+
+  createChat() {
+    this.chatService.createDialog('oponent2')
   }
 }

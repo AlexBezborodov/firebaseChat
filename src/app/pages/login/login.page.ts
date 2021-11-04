@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { ChatService } from '../../services/chat.service';
 import { Router } from '@angular/router';
+import { AlertService } from '../../services/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -12,19 +13,25 @@ import { Router } from '@angular/router';
 export class LoginPage implements OnInit {
   credentialForm: FormGroup;
   token: string;
+  userEmail: string;
   constructor(
     private fb: FormBuilder,
     private alertController: AlertController,
     private loadingController: LoadingController,
     private chatService: ChatService,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
     this.credentialForm = this.fb.group({
+      nickName: [''],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
+    if(localStorage.getItem('token')) {
+      this.router.navigateByUrl('/chat', { replaceUrl: true });
+    }
   }
   async signUp() {
     const loading = await this.loadingController.create();
@@ -35,33 +42,23 @@ export class LoginPage implements OnInit {
       this.router.navigateByUrl('/chat', { replaceUrl: true });
       }, async err => {
       loading.dismiss();
-      const alert = await  this.alertController.create({
-        header: 'Sign Up failed',
-        message: err.message,
-        buttons: ['OK']
-      });
-
-      await  alert.present();
+      this.alertService.showAlert('Sign Up failed', err);
     });
   }
   async signIn() {
     const loading = await this.loadingController.create();
     await  loading.present();
 
-    this.chatService.signIn(this.credentialForm.value)
+    await this.chatService.signIn(this.credentialForm.value)
       .then( res => {
-        res.user.getIdToken().then(result => localStorage.setItem('token', result));
+          res.user.getIdToken().then(result => localStorage.setItem('token', result))
+          .then(() => {
+            this.router.navigateByUrl('/chat', { replaceUrl: true });
+          })
         loading.dismiss();
-        this.router.navigateByUrl('/chat', { replaceUrl: true });
         }, async err => {
       loading.dismiss();
-      const alert = await  this.alertController.create({
-        header: ':(',
-        message: err.message,
-        buttons: ['OK']
-      });
-
-      await  alert.present();
+      this.alertService.showAlert(':(', err);
     });
   }
 

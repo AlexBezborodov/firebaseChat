@@ -1,11 +1,18 @@
+.logo{
+  width: 35px;
+  height: 35px;
+  margin-left: 4vw;
+}
 .message-input {
   width: 100%;
-  border: 1px solid var(--ion-color-medium);
+  border: 1px solid azure;
   border-radius: 6px;
-  background: #fff;
+  background: var(--ion-color-tertiary);
   resize: none;
   margin-top: 0px;
   --padding-start: 8px;
+  min-height: 30px;
+  color: azure;
 }
 
 .message {
@@ -29,4 +36,30 @@
   color: #dfdfdf;
   float: right;
   font-size: small;
+}
+.pos {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+ion-content {
+  height: 90vh;
+}
+.message {
+  position: relative;
+  --ion-grid-column-padding: 0 10px 0 0;
+  .del-msg {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+  }
+}
+ion-searchbar{
+  --background: rgba(141, 141, 141, 0.21);
+  --border-radius: 10px;
+  --color: azure;
+  --cancel-button-color: azure;
+  --icon-color: azure;
+  width:80%;
+  margin: 0 auto;
 }
