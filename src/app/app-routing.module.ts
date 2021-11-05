@@ -12,6 +12,7 @@ const redirectLoggedInToChat = () => redirectLoggedInTo(['/chat']);
 const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule),
     // ...canActivate(redirectLoggedInToChat),
   },
@@ -19,6 +20,10 @@ const routes: Routes = [
     path: 'chat',
     // ...canActivate(redirectUnauthorizedToLogin),
     loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    path: 'chat-rooms',
+    loadChildren: () => import('./pages/chat-rooms/chat-rooms.module').then( m => m.ChatRoomsPageModule)
   }
 ];
 

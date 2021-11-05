@@ -1,65 +1,65 @@
-<ion-menu side="start" menuId="first" contentId="main">
+  <ion-menu side="start" menuId="first" contentId="main">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>{{chatService.currentUser.email}}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="main"></ion-router-outlet>
   <ion-header>
     <ion-toolbar color="primary">
-      <ion-title>{{chatService.currentUser.email}}</ion-title>
+      <img class="logo" src="../../../assets/logo.png" slot="start">
+      <ion-searchbar showCancelButton="focus"></ion-searchbar>
+          <span (click)="createChat()">A</span>
+      <ion-buttons slot="end">
+        <ion-button fill="clear" (click)="signOut()">
+          <ion-icon name="log-out" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
-  <ion-content>
-    <ion-list>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-      <ion-item>Menu Item</ion-item>
-    </ion-list>
-  </ion-content>
-</ion-menu>
-<ion-router-outlet id="main"></ion-router-outlet>
-<ion-header>
-  <ion-toolbar color="primary">
-    <img class="logo" src="../../../assets/logo.png" slot="start">
-    <ion-searchbar showCancelButton="focus"></ion-searchbar>
-<!--    <span (click)="createChat()">A</span>-->
-    <ion-buttons slot="end">
-      <ion-button fill="clear" (click)="signOut()">
-        <ion-icon name="log-out" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content class="ion-padding">
+  <ion-content class="ion-padding">
 
-  <ion-grid>
-    <ion-row class="message" *ngFor="let message of messages | async">
+    <ion-grid>
+      <ion-row class="message" *ngFor="let message of messages | async">
 
-      <ion-col size="9" class="message"
-               [offset]="message.myMsg ? 3 : 0"
-               [ngClass]="{ 'my-message': message.myMsg, 'other-message': !message.myMsg }">
-        <b>{{ message.fromName }}</b><br>
-        <span>{{ message.msg }}
+        <ion-col size="9" class="message"
+                 [offset]="message.myMsg ? 3 : 0"
+                 [ngClass]="{ 'my-message': message.myMsg, 'other-message': !message.myMsg }">
+          <b>{{ message.fromName }}</b><br>
+          <span>{{ message.msg }}
         </span>
-        <div class="time ion-text-right"><br>{{ message.createdAt?.toMillis() | date:'short' }}</div>
-        <ion-badge (click)="deleteMsg(message.id)" *ngIf="message.myMsg" color="danger" class="del-msg">X</ion-badge>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+          <div class="time ion-text-right"><br>{{ message.createdAt?.toMillis() | date:'short' }}</div>
+          <ion-badge (click)="deleteMsg(message.id)" *ngIf="message.myMsg" color="danger" class="del-msg">X</ion-badge>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
-</ion-content>
+  </ion-content>
 
-<ion-footer class="pos">
-  <ion-toolbar style="--background: var(--ion-color-tertiary)">
-    <ion-row class="ion-align-items-center">
-      <ion-col size="9">
-        <ion-textarea autoGrow="true" class="message-input" rows="1" maxLength="500" [(ngModel)]="newMsg" >
-        </ion-textarea>
-      </ion-col>
-      <ion-col >
-        <ion-button expand="block" fill="clear" color="primary" [disabled]="newMsg === ''"
-                    class="msg-btn" (click)="sendMessage()">
-          <ion-icon name="send" color="light" slot="icon-only"></ion-icon>
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-toolbar>
-</ion-footer>
+  <ion-footer class="pos">
+    <ion-toolbar style="--background: var(--ion-color-tertiary)">
+      <ion-row class="ion-align-items-center">
+        <ion-col size="9">
+          <ion-textarea autoGrow="true" class="message-input" rows="1" maxLength="500" [(ngModel)]="newMsg" >
+          </ion-textarea>
+        </ion-col>
+        <ion-col >
+          <ion-button expand="block" fill="clear" color="primary" [disabled]="newMsg === ''"
+                      class="msg-btn" (click)="sendMessage()">
+            <ion-icon name="send" color="light" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-footer>

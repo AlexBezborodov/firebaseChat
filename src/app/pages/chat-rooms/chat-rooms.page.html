@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{chatService.getCurrentUserId()}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<div *ngFor="let chat of filteredChats">
+  <div>
+   {{getUserNamebyId(chat.userId)}}
+  </div>
+  <span *ngFor="let message of chat.messages"> {{message.text}}</span>
+</div>
+</ion-content>

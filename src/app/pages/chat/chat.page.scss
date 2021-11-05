@@ -1,3 +1,7 @@
+.chat-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
 .logo{
   width: 35px;
   height: 35px;
@@ -41,6 +45,8 @@
   position: absolute;
   bottom: 0;
   left: 0;
+  max-width: 900px;
+  margin: 0 auto;
 }
 ion-content {
   height: 90vh;

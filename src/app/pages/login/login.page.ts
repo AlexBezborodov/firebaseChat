@@ -29,9 +29,9 @@ export class LoginPage implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
-    if(localStorage.getItem('token')) {
-      this.router.navigateByUrl('/chat', { replaceUrl: true });
-    }
+    // if(localStorage.getItem('token')) {
+    //   this.router.navigateByUrl('/chat-rooms', { replaceUrl: true });
+    // }
   }
   async signUp() {
     const loading = await this.loadingController.create();
@@ -39,7 +39,7 @@ export class LoginPage implements OnInit {
 
     await this.chatService.signUp(this.credentialForm.value).then( user => {
       loading.dismiss();
-      this.router.navigateByUrl('/chat', { replaceUrl: true });
+      this.router.navigateByUrl('/chat-rooms', { replaceUrl: true });
       }, async err => {
       loading.dismiss();
       this.alertService.showAlert('Sign Up failed', err);
@@ -53,7 +53,7 @@ export class LoginPage implements OnInit {
       .then( res => {
           res.user.getIdToken().then(result => localStorage.setItem('token', result))
           .then(() => {
-            this.router.navigateByUrl('/chat', { replaceUrl: true });
+            this.router.navigateByUrl('/chat-rooms', { replaceUrl: true });
           })
         loading.dismiss();
         }, async err => {

@@ -29,6 +29,7 @@ export class ChatService {
   opponent = 'user2'
   chats: Observable<any>;
   checkedChats: boolean;
+  userId: string;
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore
@@ -36,6 +37,7 @@ export class ChatService {
     this.afAuth.onAuthStateChanged(user => {
       console.log('changed', user);
       this.currentUser = user;
+      this.userId = user.uid;
     });
   }
 
@@ -123,5 +125,8 @@ export class ChatService {
 
   getChatRooms() {
     return this.afs.collection('chatRooms').valueChanges({idField: 'uid'}) as Observable<User[]>
+  }
+  getCurrentUserId() {
+    return this.currentUser.uid
   }
 }

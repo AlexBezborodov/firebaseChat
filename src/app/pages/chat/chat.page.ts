@@ -47,6 +47,6 @@ export class ChatPage implements OnInit {
   }
 
   createChat() {
-    this.chatService.createDialog('oponent2')
+    this.chatService.createDialog('qrD1bhy1IAb2h9jJRxACxFgWFus2')
   }
 }
